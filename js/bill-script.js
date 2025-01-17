@@ -17,7 +17,7 @@
         }
 
         try {
-            const response = await fetch(`/api/products/productSearch/${query}`, {
+            const response = await fetch(`https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/productSearch/${query}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -124,7 +124,7 @@ async function searchItems() {
         const searchQuery = searchId || searchText; // Use the ID if available, otherwise use the text
 
     try {
-            const response = await fetch(`/api/products/${searchQuery}`);
+            const response = await fetch(`https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/${searchQuery}`);
         if (!response.ok) {
             throw new Error(`Error: ${response.statusText}`);
         }
@@ -308,7 +308,7 @@ function generateBill() {
         totalQuantity
     };
 
-    fetch('/api/products/generateBill', {
+    fetch('https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/generateBill', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

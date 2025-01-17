@@ -134,7 +134,7 @@ function editProduct(index) {
         }
 
         try {
-            const response = await fetch("/api/products", {
+            const response = await fetch("https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(products),

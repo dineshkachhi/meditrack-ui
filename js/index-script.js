@@ -69,7 +69,7 @@ document.getElementById("upload-btn").addEventListener("click", async () => {
     formData.append("file", file);
 
     try {
-        const response = await fetch("/api/products/upload", {
+        const response = await fetch("https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/upload", {
             method: "POST",
             body: formData,
         });

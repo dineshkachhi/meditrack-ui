@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         try {
-            const response = await fetch(`/api/products/hsn/${query}`, {
+            const response = await fetch(`https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/hsn/${query}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         try {
-            const response = await fetch(`/api/products/productName/${query}`, {
+            const response = await fetch(`https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/productName/${query}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (mrp !== null) queryParams.append("mrp", mrp);
             if (quantity !== null) queryParams.append("quantity", quantity);
 
-            const response = await fetch(`/api/products/search?${queryParams.toString()}`, {
+            const response = await fetch(`https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/search?${queryParams.toString()}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
