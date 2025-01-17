@@ -111,7 +111,7 @@ document.getElementById("upload-btn").addEventListener("click", async () => {
 async function loadAndRenderPieChart() {
     try {
         // Fetch data from the backend API
-        const response = await fetch('/api/products/pia-data');
+        const response = await fetch('https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/pia-data');
         if (!response.ok) {
             throw new Error('Failed to fetch category data');
         }
