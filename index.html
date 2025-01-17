@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management Dashboard with CI/CD</title>
+    <link rel="stylesheet" href="css/index-style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+    <style>
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 250px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: black;
+            padding: 44px;
+        }
+        .header h1 {
+            margin: 0;
+        }
+
+        .summary-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .stat-box {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            width: 25%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .widget {
+            width: 30%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+        }
+
+        /* Footer Styling */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar with icons -->
+<div class="sidebar">
+    <h2>Dashboard</h2>
+    <ul>
+
+        <li><a href="#" class="dynamic-link" data-href="/create-product.html"><i class="fas fa-plus-circle"></i> Create Product</a></li>
+        <li><a href="#" class="dynamic-link" data-href="/get-product.html"><i class="fas fa-search"></i> Search Product</a></li>
+        <li><a href="#" class="dynamic-link" data-href="/bill.html"><i class="fas fa-file-invoice"></i> Create Bill</a></li>
+        <li><a href="#" id="open-modal-btn"><i class="fas fa-upload"></i> Bulk Upload</a></li>
+    </ul>
+</div>
+
+<!-- The Modal -->
+<!-- The Modal -->
+<div id="bulk-upload-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Upload Excel File</h2>
+        <!-- Button for downloading template -->
+        <button id="download-template-btn">Download Template</button>
+        <input type="file" id="excel-file" accept=".xls,.xlsx">
+        <button id="upload-btn">Upload</button>
+
+        <!-- Add a div for displaying success or error messages along with icons -->
+        <div id="message-container">
+            <span id="message-icon"></span>
+            <span id="message"></span>
+        </div>
+
+
+    </div>
+</div>
+
+
+<!-- Main Content Section -->
+<div class="main-content">
+    <header class="header">
+        <div class="header-container">
+            <h1 class="logo">Product Management</h1>
+      
+        </div>
+    </header>
+
+    <!-- Summary Stats Section -->
+    <div class="summary-stats">
+        <div class="stat-box">Total Products: 500</div>
+        <div class="stat-box">Products Added Today: 5</div>
+        <div class="stat-box">Pending Actions: 2</div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div class="dashboard">
+        <!-- Pie Chart Section -->
+        <div class="widget" id="pie-chart">
+            <h3>Product Distribution</h3>
+            <canvas id="productPieChart"></canvas>
+        </div>
+
+        <!-- Notifications Section -->
+        <div class="widget" id="notifications">
+            <h3>Notifications</h3>
+            <ul>
+                <li><strong>Bulk Upload</strong></li>
+                <li><strong>Notifications</strong></li>
+                <li><strong>Product Management</strong></li>
+                <li><strong>Manage Your Products Efficiently</strong></li>
+                <li><strong>Total Products:</strong> 500</li>
+                <li><strong>Products Added Today:</strong> 5</li>
+                <li><strong>Pending Actions:</strong> 2</li>
+                <li><strong>Dinesh:</strong> 5 with KOYEB_SERVICE_ID with accept: json</li>
+            </ul>
+        </div>
+
+        <!-- Hyperlinks Section -->
+        <div class="widget" id="hyperlinks">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#">Create Product</a></li>
+                <li><a href="#">Search Products</a></li>
+                <li><a href="#">Upload Bulk Products</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        <p>&copy; 2025 Product Management</p>
+    </div>
+</div>
+
+<script>
+
+    // Get modal and buttons
+    const modal = document.getElementById("bulk-upload-modal");
+    const openModalBtn = document.getElementById("open-modal-btn");
+    const closeBtn = document.querySelector(".close");
+
+    // Open the modal when the button is clicked
+    openModalBtn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // Close the modal when the close button (×) is clicked
+    closeBtn.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Close the modal if the user clicks outside of the modal
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+<script src="js/common.js"></script>
+<!-- Initialize Pie Chart -->
+<script src="js/index-script.js"></script>
+
+</body>
+</html>

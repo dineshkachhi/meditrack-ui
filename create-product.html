@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Products</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- Header Section -->
+
+
+<!-- Main Content Section -->
+<div class="content">
+    <h2 id="form-title">Loading...</h2>
+    <div class="form-container">
+        <form id="product-form">
+            <!-- First Row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="hsn" id="hsn-label">HSN:</label>
+                    <input type="text" id="hsn" placeholder="Enter HSN">
+                </div>
+                <div class="form-group">
+                    <label for="productName" id="product-name-label">Product Name:</label>
+                    <input type="text" id="productName" placeholder="Enter Product Name">
+                </div>
+                <div class="form-group">
+                    <label for="batch" id="batch-label">Batch:</label>
+                    <input type="text" id="batch" placeholder="Enter Batch">
+                </div>
+            </div>
+            <!-- Second Row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="mrp" id="mrp-label">MRP:</label>
+                    <input type="number" id="mrp" placeholder="Enter MRP">
+                </div>
+                <div class="form-group">
+                    <label for="rate" id="rate-label">Rate:</label>
+                    <input type="number" id="rate" placeholder="Enter Rate">
+                </div>
+                <div class="form-group">
+                    <label for="exp" id="exp-label">Expiry Date:</label>
+                    <input type="date" id="exp">
+                </div>
+            </div>
+            <!-- Third Row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="quantity" id="quantity-label">Quantity:</label>
+                    <input type="number" id="quantity" placeholder="Enter Quantity">
+                </div>
+                <div class="form-group">
+                    <label for="category" id="category-label">Category:</label>
+                    <select id="category">
+                        <option value="">Select Category</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="productGeneralName" id="general-name-label">General Name:</label>
+                    <input type="text" id="productGeneralName" placeholder="Enter General Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" id="add-product-btn">Add Product</button>
+            </div>
+        </form>
+    </div>
+
+    <table id="product-table" class="product-table">
+        <thead>
+        <tr>
+            <th>HSN</th>
+            <th>Product Name</th>
+            <th>Batch</th>
+            <th>MRP</th>
+            <th>Rate</th>
+            <th>Expiry Date</th>
+            <th>Quantity</th>
+            <th>Category</th>
+            <th>General Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <button id="save-all-btn" class="save-btn">Save All Products</button>
+</div>
+
+<!-- Footer Section -->
+<div class="footer">
+    <p id="footer-contact">For urgent contact, call us at: +91 123 456 7890 | Email: contact@abmedstore.com</p>
+</div>
+
+<!-- JavaScript Reference -->
+<script src="js/categories_lookup.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

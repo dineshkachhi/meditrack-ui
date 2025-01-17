@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Bill</title>
+    <link rel="stylesheet" href="css/view-bill-styles.css">
+</head>
+
+<body>
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <div class="left-header">
+            <p>Serial Number: #123456</p>
+            <p>Date: <span id="billDate"></span></p>
+            <div id="customerDetails" >
+                <!-- Customer details will be injected here -->
+            </div>
+        </div>
+        <div class="right-header">
+            <h1>Company Name</h1>
+            <p>Address: 1234 Street, City, State, 12345</p>
+            <p>Mobile: (123) 456-7890</p>
+        </div>
+    </div>
+
+
+    <!-- Bill Table -->
+    <h2>Generated Bill</h2>
+    <table id="billTable">
+        <thead>
+        <tr>
+            <th>HSN</th>
+            <th>Product Name</th>
+            <th>Batch</th>
+            <th>MRP</th>
+            <th>Rate</th>
+            <th>Expiry</th>
+            <th>Quantity</th>
+            <th>Category</th>
+            <th>Product General Name</th>
+            <th>Total Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Bill data will be inserted here -->
+        </tbody>
+        <!-- Totals row -->
+        <tfoot>
+        <tr>
+            <td colspan="6">Total</td>
+            <td id="totalQuantity">0</td>
+            <td colspan="2"></td>
+            <td id="totalAmount">0.00</td>
+        </tr>
+        </tfoot>
+    </table>
+    </div>
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <button id="generatePdf">Generate PDF</button>
+        <button id="shareWhatsapp">Share on WhatsApp</button>
+    </div>
+    <!-- Footer -->
+    <div class="footer">
+        <p>Thank you for your purchase!</p>
+        <p>For inquiries, call (123) 456-7890 or visit our website at www.companywebsite.com</p>
+    </div>
+</div>
+
+<script>
+    // Populate the bill date
+    document.getElementById('billDate').textContent = new Date().toLocaleDateString();
+</script>
+<script src="js/view-bill.js"></script>
+
+</body>
+</html>

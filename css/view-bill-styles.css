@@ -1,0 +1,150 @@
+/* Set the container to A4 size */
+.container {
+    width: 210mm; /* A4 width */
+    height: 297mm; /* A4 height */
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    box-sizing: border-box; /* Ensure the padding is included in width/height */
+}
+
+/* Ensure the page fits A4 dimensions */
+body {
+    margin: 0;
+    padding: 0;
+    width: 210mm;
+    height: 297mm;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+/* Header Styling */
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.left-header,
+.right-header {
+    width: 48%; /* Each takes up 48% of the space */
+}
+
+.left-header {
+    text-align: left;
+}
+
+.right-header {
+    text-align: right;
+}
+
+.right-header h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.right-header p,
+.left-header p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* Table Styling */
+.table-responsive {
+    overflow-x: auto; /* Enable horizontal scrolling for smaller screens */
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 12px; /* Adjust font size to fit A4 */
+}
+
+table caption {
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+/* Header row styling */
+thead tr {
+    background-color: #007bff; /* Blue background */
+    color: #fff; /* White text for contrast */
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Footer row styling */
+tfoot tr {
+    background-color: #f4f4f4; /* Light gray background for footer */
+    font-weight: bold;
+}
+
+/* Footer Styling */
+.footer {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 30px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+.footer p {
+    margin: 5px 0;
+}
+
+/* Styling for the dynamic date */
+#billDate {
+    font-weight: bold;
+}
+
+/* Styling for buttons */
+button {
+    padding: 10px 15px;
+    margin-top: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* For print media to ensure A4 layout */
+@media print {
+    body {
+        width: 210mm;
+        height: 297mm;
+        margin: 0;
+    }
+
+    .container {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 20px;
+    }
+
+    table {
+        font-size: 10px; /* Adjust font size for print */
+    }
+
+    button {
+        display: none; /* Hide buttons during print */
+    }
+}

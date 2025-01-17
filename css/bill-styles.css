@@ -1,0 +1,227 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    font-size: 10px; /* Smaller font size for the whole page */
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column layout */
+    grid-template-rows: auto; /* Rows adjust based on content */
+    gap: 15px; /* Space between sections */
+}
+
+/* Search Section */
+.search {
+    grid-row: 1; /* First row */
+    display: flex;
+    align-items: center;
+    position: relative; /* For clear button positioning */
+}
+
+.search input {
+    padding: 8px;
+    font-size: 14px;
+    margin-right: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex-grow: 1; /* Makes input expand */
+}
+
+.search button {
+    width: 20%; /* Set the width to 20% */
+    padding: 8px;
+    font-size: 14px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search button:focus {
+    outline: none; /* Remove outline when focused */
+}
+
+
+
+.clear-btn {
+    background: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #ccc;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none; /* Hidden initially */
+}
+
+.clear-btn:hover {
+    color: #000;
+}
+
+/* Suggestions list styling */
+#productName-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+}
+
+#productName-suggestions li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+#productName-suggestions li:hover {
+    background-color: #f0f0f0;
+}
+
+/* Results Section */
+.results {
+    grid-row: 2; /* Second row */
+    border: 1px solid #ccc;
+    padding: 8px;
+    background-color: #f9f9f9;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 10px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 3px;
+    text-align: center;
+}
+
+th {
+    font-weight: bold;
+}
+
+/* Alternate row colors */
+#resultsTable tr:nth-child(even),
+#billTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#resultsTable tr:nth-child(odd),
+#billTable tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+/* Customer Details and Payment Options Section */
+.additional-fields {
+    grid-row: 3; /* Third row */
+    border: 1px solid #ccc;
+    padding: 8px;
+    background-color: #f9f9f9;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap; /* Allows for wrapping */
+    gap: 15px;
+}
+
+.customer-details {
+    display: flex;
+    flex-wrap: nowrap; /* Ensure all items are in a single line */
+    gap: 15px;
+    width: 100%;
+}
+
+.customer-details > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: calc(16.6% - 10px); /* Each field takes up 16.6% of the container's width to fit 6 fields in one row */
+}
+
+.customer-details > div label {
+    margin-right: 5px; /* Space between label and input */
+    font-weight: bold;
+    width: auto; /* Adjust width of label to fit content */
+}
+
+.customer-details > div input,
+.customer-details > div textarea {
+    flex: 1;
+    padding: 5px;
+    font-size: 10px;
+    margin: 0;
+}
+
+textarea {
+    resize: none;
+    height: 15px; /* Adjust height of textarea */
+}
+
+/* Payment Options Section */
+.payment-options {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    width: 100%; /* Take up full width */
+}
+
+.payment-options label {
+    font-weight: bold;
+}
+
+/* Adjusting layout for Payment Options */
+.payment-options input {
+    margin-right: 5px;
+}
+
+/* Bill Section */
+.bill {
+    grid-row: 4; /* Fourth row */
+    border: 1px solid #ccc;
+    padding: 8px;
+    background-color: #f9f9f9;
+}
+
+.bill table {
+    margin-top: 8px;
+}
+
+.bill button {
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* Optional: Button styles */
+button {
+    padding: 4px 8px;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Headings */
+h2 {
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-size: 12px;
+    margin-bottom: 8px;
+}

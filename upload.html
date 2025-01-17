@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Bulk Product Data</title>
+    <link rel="stylesheet" href="css/index-style.css">
+    <!-- Include xlsx library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+</head>
+<body>
+<header class="header">
+    <div class="header-container">
+        <h1 class="logo">Product Management</h1>
+        <div class="header-right">
+            <p>Upload Bulk Product Data</p>
+        </div>
+    </div>
+</header>
+
+<div class="content">
+    <div class="form-container">
+        <h2>Upload Excel File</h2>
+        <!-- Button for downloading template -->
+        <button id="download-template-btn">Download Template</button>
+
+        <input type="file" id="excel-file" accept=".xls,.xlsx">
+        <button id="upload-btn">Upload</button>
+    </div>
+
+    <div id="message"></div>
+</div>
+
+<footer class="footer">
+    <div class="footer-container">
+        <p>&copy; 2025 Product Management. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<!-- Custom JavaScript -->
+<script src="js/index-script.js"></script>
+</body>
+</html>
