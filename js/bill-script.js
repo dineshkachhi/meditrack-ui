@@ -298,8 +298,9 @@ function generateBill() {
     };
 
     // Store bill data in localStorage (optional, if needed later)
-        localStorage.setItem('billData', JSON.stringify(billData));
-     // Loop through selectedItems and update the product details via API call
+    localStorage.setItem('billData', JSON.stringify(billData));
+
+    // Loop through selectedItems and update the product details via API call
     selectedItems.forEach(item => {
         const updatedProduct = {
             quantity: item.selectedQuantity, // Pass the selected quantity
@@ -307,8 +308,9 @@ function generateBill() {
             updatedDate: new Date().toISOString().split('T')[0], // Format date as YYYY-MM-DD
             isActive: true // Ensure the product is marked as active
         };
-      };
-    fetch('https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/generateBill', {
+
+        // Make API call for each item to update the product details
+        fetch(`/api/products/${item.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -337,8 +339,8 @@ function getCustomerDetails() {
 
     const paymentOption = document.querySelector('input[name="paymentOption"]:checked').value;
 
-    if ( !mobile) {
-        alert("Mobile is required fields.");
+    if (!name || !mobile) {
+        alert("Name and Mobile are required fields.");
         return null;
     }
 
