@@ -322,10 +322,10 @@ function generateBill() {
         let userResponse = confirm("Bill generated successfully. Press OK to see bill.");
         if (userResponse) {
             // User clicked "OK"
-          window.location.href = 'view-bill.html';
+          window.location.href = '/meditrack-ui/view-bill.html';
         } else {
             // User clicked "Cancel"
-             window.location.href = 'bill.html';
+             window.location.href = '/meditrack-ui/bill.html';
         }
 
         })
