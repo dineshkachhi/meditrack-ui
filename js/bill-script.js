@@ -18,7 +18,7 @@
         }
 
         try {
-            const response = await fetch(`/api/products/productSearch/${query}`, {
+            const response = await fetch(`https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/productSearch/${query}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -125,7 +125,7 @@ async function searchItems() {
         const searchQuery = searchId || searchText; // Use the ID if available, otherwise use the text
 
     try {
-            const response = await fetch(`/api/products/${searchQuery}`);
+            const response = await fetch(`https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/${searchQuery}`);
         if (!response.ok) {
             throw new Error(`Error: ${response.statusText}`);
         }
@@ -298,9 +298,8 @@ function generateBill() {
     };
 
     // Store bill data in localStorage (optional, if needed later)
-    localStorage.setItem('billData', JSON.stringify(billData));
-
-    // Loop through selectedItems and update the product details via API call
+        localStorage.setItem('billData', JSON.stringify(billData));
+     // Loop through selectedItems and update the product details via API call
     selectedItems.forEach(item => {
         const updatedProduct = {
             quantity: item.selectedQuantity, // Pass the selected quantity
@@ -308,9 +307,8 @@ function generateBill() {
             updatedDate: new Date().toISOString().split('T')[0], // Format date as YYYY-MM-DD
             isActive: true // Ensure the product is marked as active
         };
-
-        // Make API call for each item to update the product details
-        fetch(`/api/products/${item.id}`, {
+      };
+    fetch('https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/generateBill', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -327,7 +325,7 @@ function generateBill() {
     });
 
     // Redirect to the view-bill.html page (optional, if you want to continue after the API call)
-    window.location.href = 'view-bill.html';
+    window.location.href = '/meditrack-ui/view-bill.html';
 }
 
 // Function to capture additional customer details
@@ -339,8 +337,8 @@ function getCustomerDetails() {
 
     const paymentOption = document.querySelector('input[name="paymentOption"]:checked').value;
 
-    if (!name || !mobile) {
-        alert("Name and Mobile are required fields.");
+    if ( !mobile) {
+        alert("Mobile is required fields.");
         return null;
     }
 
