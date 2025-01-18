@@ -1,5 +1,6 @@
 
 
+
     // Product Name Field
     const searchInputField = document.getElementById("searchInput");
     const searchInputSuggestions = document.createElement("ul");
@@ -17,7 +18,7 @@
         }
 
         try {
-            const response = await fetch(`https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/productSearch/${query}`, {
+            const response = await fetch(`/api/products/productSearch/${query}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -124,7 +125,7 @@ async function searchItems() {
         const searchQuery = searchId || searchText; // Use the ID if available, otherwise use the text
 
     try {
-            const response = await fetch(`https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/${searchQuery}`);
+            const response = await fetch(`/api/products/${searchQuery}`);
         if (!response.ok) {
             throw new Error(`Error: ${response.statusText}`);
         }
@@ -290,27 +291,16 @@ function generateBill() {
         return;
     }
 
-    let totalQuantity = 0;
-    let totalAmount = 0;
-    selectedItems.forEach(item => {
-        totalQuantity += item.selectedQuantity;
-        totalAmount += item.selectedRate * item.selectedQuantity;
-    });
-
+    // Combine customer details and selected items
     const billData = {
         customerDetails,
-        items: selectedItems.map(item => ({
-            productId: item.id,
-            selectedQuantity: item.selectedQuantity,
-            selectedRate: item.selectedRate
-        })),
-        totalAmount,
-        totalQuantity
+        items: selectedItems
     };
 
     // Store bill data in localStorage (optional, if needed later)
-        localStorage.setItem('billData', JSON.stringify(billData));
-     // Loop through selectedItems and update the product details via API call
+    localStorage.setItem('billData', JSON.stringify(billData));
+
+    // Loop through selectedItems and update the product details via API call
     selectedItems.forEach(item => {
         const updatedProduct = {
             quantity: item.selectedQuantity, // Pass the selected quantity
@@ -318,32 +308,26 @@ function generateBill() {
             updatedDate: new Date().toISOString().split('T')[0], // Format date as YYYY-MM-DD
             isActive: true // Ensure the product is marked as active
         };
-      };
-    fetch('https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/generateBill', {
+
+        // Make API call for each item to update the product details
+        fetch(`/api/products/${item.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-        body: JSON.stringify(billData)
+            body: JSON.stringify(updatedProduct)
         })
         .then(response => response.json())
         .then(data => {
-        console.log('Bill generated successfully:', data);
-        // Optionally redirect to the view bill page
-        let userResponse = confirm("Bill generated successfully. Press OK to see bill.");
-        if (userResponse) {
-            // User clicked "OK"
-          window.location.href = '/meditrack-ui/view-bill.html';
-        } else {
-            // User clicked "Cancel"
-             window.location.href = '/meditrack-ui/bill.html';
-        }
-
+            console.log('Product updated successfully:', data);
         })
         .catch(error => {
-        console.error('Error generating bill:', error);
-        alert("Error while generating bill.");
+            console.error('Error updating product:', error);
         });
+    });
+
+    // Redirect to the view-bill.html page (optional, if you want to continue after the API call)
+    window.location.href = 'view-bill.html';
 }
 
 // Function to capture additional customer details
@@ -355,8 +339,8 @@ function getCustomerDetails() {
 
     const paymentOption = document.querySelector('input[name="paymentOption"]:checked').value;
 
-    if ( !mobile) {
-        alert("Mobile is required fields.");
+    if (!name || !mobile) {
+        alert("Name and Mobile are required fields.");
         return null;
     }
 
