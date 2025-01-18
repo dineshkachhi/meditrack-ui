@@ -310,7 +310,7 @@ function generateBill() {
         };
 
         // Make API call for each item to update the product details
-        fetch(`/api/products/${item.id}`, {
+        fetch(`https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/generateBill`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
