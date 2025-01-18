@@ -308,6 +308,17 @@ function generateBill() {
         totalQuantity
     };
 
+    // Store bill data in localStorage (optional, if needed later)
+        localStorage.setItem('billData', JSON.stringify(billData));
+// Loop through selectedItems and update the product details via API call
+    selectedItems.forEach(item => {
+        const updatedProduct = {
+            quantity: item.selectedQuantity, // Pass the selected quantity
+            rate: item.selectedRate, // Pass the selected quantity
+            updatedDate: new Date().toISOString().split('T')[0], // Format date as YYYY-MM-DD
+            isActive: true // Ensure the product is marked as active
+        };
+
     fetch('https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/generateBill', {
             method: 'PUT',
             headers: {
