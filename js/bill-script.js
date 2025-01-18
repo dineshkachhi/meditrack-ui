@@ -318,7 +318,7 @@ function generateBill() {
             updatedDate: new Date().toISOString().split('T')[0], // Format date as YYYY-MM-DD
             isActive: true // Ensure the product is marked as active
         };
-}
+      };
     fetch('https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/generateBill', {
             method: 'PUT',
             headers: {
