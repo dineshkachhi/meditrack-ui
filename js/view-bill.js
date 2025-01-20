@@ -46,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
             <td>${product.selectedQuantity}</td>
             <td>${product.category}</td>
             <td>${product.productGeneralName}</td>
-            <td>${product.createdDate || '-'}</td>
             <td>${(product.selectedRate * product.selectedQuantity).toFixed(2)}</td>
         `;
         billTableBody.appendChild(row);
