@@ -57,6 +57,7 @@
 
   <script>
     const HOSTNAME = "https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app";
+
     // Register Button Click Handler
     document.getElementById('registerBtn').addEventListener('click', async function() {
         const username = document.getElementById('username').value;
@@ -85,7 +86,7 @@
             if (response.ok) {
                 const data = await response.text();
                 alert("Registration successful: " + data);
-                window.location.href = 'login.html'; // Redirect to login page
+                window.location.href = 'https://dineshkachhi.github.io/meditrack-ui/login.html'; // Redirect to login page
             } else {
                 const data = await response.text();
                 alert("Registration failed: " + data);
@@ -100,7 +101,7 @@
 
     // Login Button Click Handler (redirect to login page)
     document.getElementById('loginBtn').addEventListener('click', function() {
-        window.location.href = 'login.html'; // Redirect to login page
+        window.location.href = 'https://dineshkachhi.github.io/meditrack-ui/login.html'; // Redirect to login page
     });
   </script>
 

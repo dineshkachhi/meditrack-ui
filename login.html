@@ -55,7 +55,7 @@
         const token = localStorage.getItem('jwtToken');
         if (token) {
             // Redirect to index.html if token exists
-            window.location.href = '/index.html';
+            window.location.href = 'https://dineshkachhi.github.io/meditrack-ui/index.html';
         }
     };
 
@@ -81,7 +81,7 @@
                 const data = await response.text();
                 alert("Login successful: " + data);
                 localStorage.setItem('jwtToken', data); // Store token
-                window.location.href = '/index.html'; // Redirect to home or dashboard
+                window.location.href = 'https://dineshkachhi.github.io/meditrack-ui/index.html'; // Redirect to home or dashboard
             } else {
                 alert("Invalid credentials!");
             }
@@ -92,7 +92,7 @@
 
     // Redirect to Register page
     document.getElementById('registerBtn').addEventListener('click', function() {
-        window.location.href = 'register.html'; // Redirect to registration page
+        window.location.href = 'https://dineshkachhi.github.io/meditrack-ui/register.html'; // Redirect to registration page
     });
 </script>
 

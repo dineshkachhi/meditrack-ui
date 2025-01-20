@@ -22,7 +22,7 @@ function checkLoginStatus() {
      // Access the token from the object
       if (!tokenObj ) {
         alert("You are not logged in!");
-        window.location.href = '/login.html';  // Redirect to login page
+        window.location.href = 'https://dineshkachhi.github.io/meditrack-ui/login.html';  // Redirect to login page
     } else {
            const token = tokenObj.token;
         console.log("User is logged in with token: " + token);
@@ -35,7 +35,7 @@ function checkLoginStatus() {
         if (expiryTime < Date.now()) {
             alert("Your session has expired. Please log in again.");
             localStorage.removeItem('jwtToken');  // Clear expired token
-            window.location.href = '/login.html';  // Redirect to login page
+            window.location.href = 'https://dineshkachhi.github.io/meditrack-ui/login.html';  // Redirect to login page
         }
     }
 }
