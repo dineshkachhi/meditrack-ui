@@ -79,7 +79,7 @@
 
             if (response.ok) {
                 const data = await response.text();
-                alert("Login successful: " + data);
+             //   alert("Login successful!");
                 localStorage.setItem('jwtToken', data); // Store token
                 window.location.href = 'https://dineshkachhi.github.io/meditrack-ui/index.html'; // Redirect to home or dashboard
             } else {

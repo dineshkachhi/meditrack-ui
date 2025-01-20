@@ -85,7 +85,7 @@
 
             if (response.ok) {
                 const data = await response.text();
-                alert("Registration successful: " + data);
+                alert("Registration successful!");
                 window.location.href = 'https://dineshkachhi.github.io/meditrack-ui/login.html'; // Redirect to login page
             } else {
                 const data = await response.text();
