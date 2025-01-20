@@ -1,3 +1,7 @@
+// Call this function when the page loads
+window.onload = function() {
+    checkLoginStatus();  // Check if the user is logged in
+};
 // create-label.js
 document.addEventListener('DOMContentLoaded', function () {
     const labels = {
@@ -134,9 +138,14 @@ function editProduct(index) {
         }
 
         try {
-            const response = await fetch("https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products", {
+            const tokenObj = JSON.parse(localStorage.getItem('jwtToken'));
+            const token = tokenObj.token; // Access the token from the objectō
+            var FINAL_URL = HOSTNAME + '/api/products';
+            const response = await fetch(FINAL_URL, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                 'Authorization': `Bearer ${token}`, // Add the token in the Authorization header
+                 "Content-Type": "application/json" },
                 body: JSON.stringify(products),
             });
 

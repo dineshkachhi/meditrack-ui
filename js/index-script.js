@@ -1,15 +1,12 @@
 
-/*    const ctx = document.getElementById('productPieChart').getContext('2d');
-    const productPieChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ['Electronics', 'Clothing', 'Furniture', 'Others'],
-            datasets: [{
-                data: [50, 30, 10, 10],
-                backgroundColor: ['#ff5733', '#33ff57', '#3357ff', '#f4c542']
-            }]
-        }
-    });*/
+
+// Call this function when the page loads
+window.onload = function() {
+// Call the function on page loadō
+    checkLoginStatus();  // Check if the user is logged in
+     loadAndRenderPieChart();
+};
+
 
 // Function to generate an Excel file template
 document.getElementById('download-template-btn').addEventListener('click', () => {
@@ -69,9 +66,14 @@ document.getElementById("upload-btn").addEventListener("click", async () => {
     formData.append("file", file);
 
     try {
-        const response = await fetch("https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/upload", {
+               const tokenObj = JSON.parse(localStorage.getItem('jwtToken'));
+                const token = tokenObj.token; // Access the token from the objectō
+                var FINAL_URL = HOSTNAME + '/api/products/upload';
+        const response = await fetch(FINAL_URL, {
             method: "POST",
             body: formData,
+            headers: {'Authorization': `Bearer ${token}`, // Add the token in the Authorization header
+                       "Content-Type": "application/json"}
         });
 
         const messageContainer = document.getElementById('message'); // Get message container
@@ -110,22 +112,45 @@ document.getElementById("upload-btn").addEventListener("click", async () => {
 // Function to fetch data from the backend and render the pie chart
 async function loadAndRenderPieChart() {
     try {
-        // Fetch data from the backend API
-        const response = await fetch('https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/pia-data');
+
+     const tokenObj = JSON.parse(localStorage.getItem('jwtToken'));
+     const token = tokenObj.token; // Access the token from the object
+
+
+        var FINAL_URL = HOSTNAME + '/api/products/pia-data';
+        const response = await fetch(FINAL_URL, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`, // Add the token in the Authorization header
+                'Content-Type': 'application/json' // Specify content type as JSON
+            }
+        });
+
         if (!response.ok) {
             throw new Error('Failed to fetch category data');
         }
+
         // Parse the JSON response
         const data = await response.json();
+
         // Extract labels and quantities from the response
         const labels = data.labels;
         const quantities = data.quantities;
+
         // Render the pie chart
         const ctx = document.getElementById('productPieChart').getContext('2d');
+
+
+
         // Destroy existing chart if it exists to prevent overlapping
-        if (window.productPieChart) {
-          //  window.productPieChart.destroy();
+        try {
+            if (window.productPieChart) {
+                window.productPieChart.destroy();
+            }
+        } catch (error) {
+            console.error("Error destroying existing pie chart: ", error);
         }
+
         // Create a new pie chart
         window.productPieChart = new Chart(ctx, {
             type: 'pie',
@@ -159,8 +184,7 @@ function generateRandomColors(count) {
 }
 
 
-// Call the function on page load
-window.onload = loadAndRenderPieChart;
+
 
 
 

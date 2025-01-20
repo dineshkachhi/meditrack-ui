@@ -1,3 +1,9 @@
+
+// Call this function when the page loads
+window.onload = function() {
+// Call the function on page loadō
+    checkLoginStatus();  // Check if the user is logged in
+};
 document.addEventListener('DOMContentLoaded', function () {
     // HSN Field
     const hsnInput = document.getElementById("hsn-search");
@@ -15,12 +21,17 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
+
         try {
-            const response = await fetch(`https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/hsn/${query}`, {
+                     const tokenObj = JSON.parse(localStorage.getItem('jwtToken'));
+                     const token = tokenObj.token; // Access the token from the objectō
+                             var FINAL_URL = HOSTNAME + '/api/products/hsn/';
+                             const response = await fetch(FINAL_URL+query, {
                 method: "GET",
                 headers: {
+                    'Authorization': `Bearer ${token}`, // Add the token in the Authorization header
                     "Content-Type": "application/json",
-                },
+                }
             });
 
             if (response.ok) {
@@ -73,11 +84,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         try {
-            const response = await fetch(`https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/productName/${query}`, {
+             const tokenObj = JSON.parse(localStorage.getItem('jwtToken'));
+             const token = tokenObj.token; // Access the token from the object
+             var FINAL_URL = HOSTNAME + '/api/products/productName/';
+            const response = await fetch(FINAL_URL+query, {
                 method: "GET",
                 headers: {
+                    'Authorization': `Bearer ${token}`, // Add the token in the Authorization header
                     "Content-Type": "application/json",
-                },
+                }
             });
 
             if (response.ok) {
@@ -141,11 +156,16 @@ document.addEventListener('DOMContentLoaded', function () {
             if (mrp !== null) queryParams.append("mrp", mrp);
             if (quantity !== null) queryParams.append("quantity", quantity);
 
-            const response = await fetch(`https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/search?${queryParams.toString()}`, {
+             const tokenObj = JSON.parse(localStorage.getItem('jwtToken'));
+             const token = tokenObj.token; // Access the token from the object
+           // var FINAL_URL = HOSTNAME + '/api/products/search?${queryParams.toString()}';
+            var FINAL_URL = HOSTNAME + '/api/products/search?';
+            const response = await fetch(FINAL_URL+ queryParams, {
                 method: "GET",
                 headers: {
+                    'Authorization': `Bearer ${token}`, // Add the token in the Authorization header
                     "Content-Type": "application/json",
-                },
+                }
             });
 
             if (response.ok) {

@@ -1,6 +1,9 @@
 
-
-
+    // Call this function when the page loads
+    window.onload = function() {
+    // Call the function on page loadō
+        checkLoginStatus();  // Check if the user is logged in
+    };
     // Product Name Field
     const searchInputField = document.getElementById("searchInput");
     const searchInputSuggestions = document.createElement("ul");
@@ -18,9 +21,15 @@
         }
 
         try {
-            const response = await fetch(`https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/productSearch/${query}`, {
+         const tokenObj = JSON.parse(localStorage.getItem('jwtToken'));
+         const token = tokenObj.token; // Access the token from the objectō
+
+             var FINAL_URL = HOSTNAME + '/api/products/productSearch/';
+
+            const response = await fetch(FINAL_URL+ query, {
                 method: "GET",
                 headers: {
+                    'Authorization': `Bearer ${token}`, // Add the token in the Authorization header
                     "Content-Type": "application/json",
                 },
             });
@@ -125,7 +134,17 @@ async function searchItems() {
         const searchQuery = searchId || searchText; // Use the ID if available, otherwise use the text
 
     try {
-            const response = await fetch(`https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/${searchQuery}`);
+          const tokenObj = JSON.parse(localStorage.getItem('jwtToken'));
+          const token = tokenObj.token; // Access the token from the objectō
+          var FINAL_URL = HOSTNAME + '/api/products/';
+            const response = await fetch(FINAL_URL+ searchQuery, {
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${token}`, // Add the token in the Authorization header
+                    "Content-Type": "application/json",
+                },
+            });
+
         if (!response.ok) {
             throw new Error(`Error: ${response.statusText}`);
         }
@@ -178,7 +197,7 @@ async function searchItems() {
             resultsTable.appendChild(row);
         });
     } catch (error) {
-        console.error('Error fetching search results:', error);
+     //   console.error('Error fetching search results:', error);
         alert('Failed to fetch search results. Please try again.');
     }
 }
@@ -277,57 +296,90 @@ function removeFromBill(productId) {
     }
 }
 
-
-// Update generateBill function to include customer details and make API call
-function generateBill() {
+// Generate bill with customer details and make API call
+async function generateBill() {
+    // Validate selected items
     if (selectedItems.length === 0) {
         alert('No items selected for the bill.');
         return;
     }
 
+    // Get and validate customer details
     const customerDetails = getCustomerDetails();
     if (!customerDetails) {
         alert('Customer details are required.');
         return;
     }
 
-    // Combine customer details and selected items
+    // Calculate total quantity and amount
+    const { totalQuantity, totalAmount } = calculateTotals(selectedItems);
+
+    // Prepare bill data
     const billData = {
         customerDetails,
-        items: selectedItems
+        items: formatItems(selectedItems),
+        totalAmount,
+        totalQuantity,
     };
 
-    // Store bill data in localStorage (optional, if needed later)
+    // Store bill data in localStorage (optional)
     localStorage.setItem('billData', JSON.stringify(billData));
 
-    // Loop through selectedItems and update the product details via API call
-    selectedItems.forEach(item => {
-        const updatedProduct = {
-            quantity: item.selectedQuantity, // Pass the selected quantity
-            rate: item.selectedRate, // Pass the selected quantity
-            updatedDate: new Date().toISOString().split('T')[0], // Format date as YYYY-MM-DD
-            isActive: true // Ensure the product is marked as active
-        };
+    try {
+        // Retrieve the JWT token
+        const tokenObj = JSON.parse(localStorage.getItem('jwtToken'));
+        const token = tokenObj?.token;
 
-        // Make API call for each item to update the product details
-        fetch(`https://dual-zsazsa-meditrack-7e0ead8a.koyeb.app/api/products/generateBill`, {
-            method: 'PUT',
+        if (!token) {
+            alert('Authentication token is missing. Please log in again.');
+            return;
+        }
+
+        // Make the API call to generate the bill
+        var FINAL_URL = HOSTNAME + '/api/products/generateBill';
+        const response = await fetch(FINAL_URL, {
+            method: 'POST',
             headers: {
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(updatedProduct)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Product updated successfully:', data);
-        })
-        .catch(error => {
-            console.error('Error updating product:', error);
+            body: JSON.stringify(billData),
         });
-    });
 
-    // Redirect to the view-bill.html page (optional, if you want to continue after the API call)
-    window.location.href = '/meditrack-ui/view-bill.html';
+        if (!response.ok) {
+            throw new Error(`Failed to generate bill: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log('Bill generated successfully:', data);
+
+        // Redirect to the view-bill.html page
+        window.location.href = 'view-bill.html';
+    } catch (error) {
+        console.error('Error generating bill:', error);
+        alert('Failed to generate bill. Please try again.');
+    }
+}
+
+// Helper function to calculate totals
+function calculateTotals(items) {
+    return items.reduce(
+        (totals, item) => {
+            totals.totalQuantity += item.selectedQuantity;
+            totals.totalAmount += item.selectedRate * item.selectedQuantity;
+            return totals;
+        },
+        { totalQuantity: 0, totalAmount: 0 }
+    );
+}
+
+// Helper function to format items
+function formatItems(items) {
+    return items.map(item => ({
+        productId: item.id,
+        selectedQuantity: item.selectedQuantity,
+        selectedRate: item.selectedRate
+    }));
 }
 
 // Function to capture additional customer details
@@ -339,8 +391,8 @@ function getCustomerDetails() {
 
     const paymentOption = document.querySelector('input[name="paymentOption"]:checked').value;
 
-    if (!name || !mobile) {
-        alert("Name and Mobile are required fields.");
+    if ( !mobile) {
+        alert("Mobile is required fields.");
         return null;
     }
 

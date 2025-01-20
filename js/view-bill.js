@@ -1,3 +1,9 @@
+// Call this function when the page loads
+window.onload = function() {
+// Call the function on page loadō
+    checkLoginStatus();  // Check if the user is logged in
+};
+
 document.addEventListener('DOMContentLoaded', function () {
     const billData = JSON.parse(localStorage.getItem('billData'));
 
@@ -34,12 +40,13 @@ document.addEventListener('DOMContentLoaded', function () {
             <td>${product.hsn || '-'}</td>
             <td>${product.productName}</td>
             <td>${product.batch}</td>
-            <td>${product.mrp.toFixed(2)}</td>
-            <td>${product.selectedRate.toFixed(2)}</td>
+            <td>${product.mrp}</td>
+            <td>${product.selectedRate}</td>
             <td>${product.exp || '-'}</td>
             <td>${product.selectedQuantity}</td>
             <td>${product.category}</td>
             <td>${product.productGeneralName}</td>
+            <td>${product.createdDate || '-'}</td>
             <td>${(product.selectedRate * product.selectedQuantity).toFixed(2)}</td>
         `;
         billTableBody.appendChild(row);
