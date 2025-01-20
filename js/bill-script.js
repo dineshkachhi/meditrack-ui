@@ -354,7 +354,7 @@ async function generateBill() {
         console.log('Bill generated successfully:', data);
 
         // Redirect to the view-bill.html page
-        window.location.href = 'https://dineshkachhi.github.io/meditrack-ui/view-bill.html';
+        window.location.href = '/meditrack-ui/view-bill.html';
     } catch (error) {
         console.error('Error generating bill:', error);
         alert('Failed to generate bill. Please try again.');
